@@ -363,8 +363,28 @@ function getSpiralMatrix(size) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const newMatrix = [];
+  const currentMatrix = matrix;
+  let lastIndex;
+  let i;
+  let j;
+
+  for (i = 0; i < matrix.length; i += 1) {
+    newMatrix[i] = [];
+    lastIndex = matrix[i].length - 1;
+    for (j = lastIndex; j >= 0; j -= 1) {
+      newMatrix[i][lastIndex - j] = matrix[j][i];
+    }
+  }
+
+  for (i = 0; i < newMatrix.length; i += 1) {
+    for (j = 0; j < newMatrix[i].length; j += 1) {
+      currentMatrix[i][j] = newMatrix[i][j];
+    }
+  }
+
+  return currentMatrix;
 }
 
 /**
@@ -421,8 +441,19 @@ function sortByAsc(arr, left = 0, right = arr.length - 1) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let cloneStr = str;
+  let step = iterations % (str.length - 2);
+  if (iterations > 100) step *= 5;
+  for (let stp = 0; stp < step; stp += 1) {
+    for (let i = 1; i < cloneStr.length / 2 + 1; i += 1) {
+      const curI = cloneStr[i];
+      cloneStr =
+        cloneStr.substring(0, i) + cloneStr.substring(i + 1, str.length);
+      cloneStr += curI;
+    }
+  }
+  return cloneStr;
 }
 
 /**
@@ -442,8 +473,25 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const array = [];
+  let nums = [];
+  let sorted = '';
+  let num = number;
+  for (let i = 0; i < `${number}`.length; i += 1) {
+    array.push(`${number}`[i]);
+  }
+  const sorted2 = array.sort().join('');
+  do {
+    num += 1;
+    nums = [];
+    for (let i = 0; i < `${num}`.length; i += 1) {
+      nums.push(`${num}`[i]);
+    }
+    sorted = nums.sort().join('');
+  } while (sorted2 !== sorted);
+
+  return num;
 }
 
 module.exports = {
